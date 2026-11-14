@@ -1,0 +1,64 @@
+{
+ "bpm": 108,
+ "linhas": [
+  {
+   "id": "passageiro",
+   "palavra": "Imagina",
+   "acao": "o passageiro espera na paragem, com o saco às costas"
+  },
+  {
+   "id": "chapaChega",
+   "palavra": "chapa",
+   "acao": "o chapa trava na paragem",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "sacoCai",
+   "palavra": "saco",
+   "acao": "o saco cai ao lado do passageiro",
+   "sfx": "thud"
+  },
+  {
+   "id": "sacoCresce",
+   "palavra": "enorme",
+   "acao": "o saco incha até ficar gigante",
+   "sfx": "boing"
+  },
+  {
+   "id": "viajaBanco",
+   "palavra": "Ocupa",
+   "acao": "a câmara entra pela janela do chapa",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "sacoBanco",
+   "palavra": "banco",
+   "acao": "o saco aterra no banco, que afunda",
+   "sfx": "thud"
+  },
+  {
+   "id": "viajaPorta",
+   "palavra": "E",
+   "acao": "a câmara desliza para a porta do chapa",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "cobrador",
+   "palavra": "cobrador",
+   "acao": "o cobrador aparece à porta",
+   "sfx": "pop"
+  },
+  {
+   "id": "moedas",
+   "palavra": "cobra",
+   "acao": "moedas caem em cima do saco",
+   "sfx": "cash"
+  },
+  {
+   "id": "lugar",
+   "palavra": "lugar",
+   "acao": "a câmara recua: o saco a ocupar o lugar todo",
+   "sfx": "ting"
+  }
+ ]
+}

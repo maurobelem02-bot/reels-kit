@@ -1,0 +1,18 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
+<script type="importmap">{"imports":{
+ "three":"./node_modules/three/build/three.module.js",
+ "three/addons/":"./node_modules/three/examples/jsm/",
+ "postprocessing":"./node_modules/postprocessing/build/index.js"}}</script>
+</head><body><div id="stage"></div><div id="ui"></div>
+<script type="module">
+// Página fixa: carrega o motor e o story.js do vídeo. Não se edita por vídeo.
+import {criarMotor} from './motor.js';
+import * as story from './story.js';
+try {
+  const m = await criarMotor(story.config);
+  const s = await story.montar(m);
+  window.DURACAO = story.config.duracao;
+  window.renderAt = t => { story.atualizar(t, m, s); m.frame(t, story.extra ? story.extra(t, m, s) : {}); };
+} catch (e) { window.ERRO = String(e.stack || e); console.error(e); }
+</script></body></html>

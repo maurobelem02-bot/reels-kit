@@ -1,0 +1,12 @@
+{
+ "passageiro": 0.183,
+ "chapaChega": 1.703,
+ "sacoCai": 2.753,
+ "sacoCresce": 3.133,
+ "viajaBanco": 4.003,
+ "sacoBanco": 4.718,
+ "viajaPorta": 6.058,
+ "cobrador": 6.548,
+ "moedas": 7.108,
+ "lugar": 7.913
+}

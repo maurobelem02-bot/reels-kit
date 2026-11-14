@@ -1,0 +1,20 @@
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#000;font-family:Poppins,sans-serif}
+#stage,#ui{position:absolute;inset:0}
+#stage canvas{display:block}
+/* legendas: 1-3 palavras, brancas com contorno; palavra-chave em caixa de cor (azul = positivo, vermelho = negativo) */
+#cap{position:absolute;left:50%;top:1340px;transform:translateX(-50%);max-width:960px;text-align:center;font:800 84px/1.15 Poppins;color:#fff;
+ -webkit-text-stroke:4px #10203f;paint-order:stroke fill;text-shadow:0 6px 0 rgba(0,0,0,.35);white-space:nowrap}
+#cap span{display:inline-block}
+#cap span.fut{visibility:hidden}
+#cap span.pos,#cap span.neg{padding:2px 22px 6px;border-radius:18px;-webkit-text-stroke:0;text-shadow:none;color:#fff;margin:0 4px}
+#cap span.pos{background:#1f6fd6;box-shadow:0 8px 0 #0a2a5c}
+#cap span.neg{background:#e5383b;box-shadow:0 8px 0 #8c1c1e}
+/* marca: pequena e discreta por baixo das legendas */
+#marca{position:absolute;left:0;right:0;top:1490px;text-align:center;font:600 24px Poppins;color:#fff;opacity:.55;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+/* cartão final do CTA, no terço de cima */
+#cta{position:absolute;left:50%;top:470px;transform:translateX(-50%);width:860px;opacity:0;background:#fff;border-radius:44px;padding:48px 40px;box-sizing:border-box;
+ text-align:center;box-shadow:0 24px 60px rgba(10,42,92,.35)}
+#cta .t{font:800 64px/1.15 Poppins;color:#0a2a5c}
+#cta .t b{background:#34c27a;color:#fff;padding:0 18px;border-radius:14px}
+#cta .a{margin-top:26px;font:700 46px Poppins;color:#1f6fd6}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
