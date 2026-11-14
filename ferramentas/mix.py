@@ -1,5 +1,5 @@
 """Mistura com níveis medidos nos Reels de referência (fundo ~20 dB abaixo da fala).
-Uso: python3 mix.py voz.mp3 music.wav sfx.wav [--musica faixa.mp3] [--mdb -18] [--sdb -10]
+Uso: python3 mix.py voz.mp3 music.wav sfx.wav [--dur DURACAO_DO_VIDEO] [--musica faixa.mp3] [--mdb -18] [--sdb -10]
  - música: RMS a -18 dB da voz (RMS com gate). Antes era -6 dB: competia com a fala.
  - SFX: RMS a -10 dB da voz, picos <= 0.5x o pico da voz.
  - --musica: usa uma faixa do utilizador (pasta musica/) em vez da sintetizada: corta/repete, fade in 0.4 s, fade out 1.5 s.
@@ -8,6 +8,7 @@ import sys, subprocess, argparse, numpy as np
 SR = 44100
 ap = argparse.ArgumentParser(); ap.add_argument('voz'); ap.add_argument('music'); ap.add_argument('sfx')
 ap.add_argument('--musica'); ap.add_argument('--mdb', type=float, default=-18); ap.add_argument('--sdb', type=float, default=-10)
+ap.add_argument('--dur', type=float, default=0, help='duração do vídeo: a voz leva silêncio no fim e a música continua por baixo do CTA')
 a = ap.parse_args()
 def load(p):
     raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', p, '-f', 's16le', '-ac', '2', '-ar', str(SR), '-'], capture_output=True, check=True).stdout
@@ -18,7 +19,9 @@ def grms(x, gate_db=-40):
     g = r[20 * np.log10(r) > gate_db]
     return np.sqrt((g ** 2).mean()) if len(g) else 1e-6
 db = lambda v: 20 * np.log10(v + 1e-12)
-v = load(a.voz); n = len(v)
+v = load(a.voz)
+if a.dur and a.dur * SR > len(v): v = np.pad(v, ((0, int(a.dur * SR) - len(v)), (0, 0)))  # silêncio no fim (CTA)
+n = len(v)
 mu = load(a.musica) if a.musica else load(a.music)
 if a.musica:
     mu = np.tile(mu, (int(np.ceil(n / len(mu))), 1))[:n]
