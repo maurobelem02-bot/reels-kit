@@ -276,13 +276,14 @@ export async function criarMotor(cfg) {
   const POSn = new Set([...POS].map(norm)), NEGn = new Set([...NEG].map(norm));
   let capKey = '';
   const legendas = (t, esconder) => {
-    const g = esconder ? null : grupos.find((g, i) => t >= g[0].s - .05 && t < (grupos[i + 1] ? grupos[i + 1][0].s - .05 : g[g.length - 1].e + .6));
+    // o 1.º grupo aparece já no frame 0 (o gancho escrito é a capa do vídeo), com a 1.ª palavra visível
+    const g = esconder ? null : grupos.find((g, i) => (i === 0 ? t >= 0 : t >= g[0].s - .05) && t < (grupos[i + 1] ? grupos[i + 1][0].s - .05 : g[g.length - 1].e + .6));
     const key = g ? g[0].s + '|' + g.filter(w => t >= w.s - .05).length : '';
     if (key !== capKey) {
       capKey = key;
-      $('cap').innerHTML = g ? g.map(w => { const n = norm(w.w), cls = POSn.has(n) ? 'pos' : NEGn.has(n) ? 'neg' : ''; return `<span class="${cls}${t >= w.s - .05 ? '' : ' fut'}">${cls ? w.w.toUpperCase() : w.w}</span>`; }).join(' ') : '';
+      $('cap').innerHTML = g ? g.map((w, j) => { const n = norm(w.w), cls = POSn.has(n) ? 'pos' : NEGn.has(n) ? 'neg' : ''; const vis = t >= w.s - .05 || (g === grupos[0] && j === 0); return `<span class="${cls}${vis ? '' : ' fut'}">${cls ? w.w.toUpperCase() : w.w}</span>`; }).join(' ') : '';
     }
-    if (g) { const k = clamp((t - g[0].s + .05) / .12); $('cap').style.transform = `translateX(-50%) scale(${.86 + .14 * back(k, 2)})`; }
+    if (g) { const k = g === grupos[0] ? 1 : clamp((t - g[0].s + .05) / .12); $('cap').style.transform = `translateX(-50%) scale(${.86 + .14 * back(k, 2)})`; }
   };
 
   // ---------- render de um frame ----------
