@@ -26,4 +26,7 @@ export async function abrir(pagina = 'index.html', n = 1) {
   }
   return {br, pages, srv, fechar: async () => { await br.close(); srv.close(); }};
 }
+// opções comuns: --pagina video.html (por defeito index.html), --dur 30 (se a página não definir window.DURACAO)
+export const opcao = (nome, def) => { const a = process.argv, i = a.indexOf('--' + nome); return i >= 0 ? a[i + 1] : def; };
+export const posicionais = () => { const a = process.argv.slice(2), r = []; for (let i = 0; i < a.length; i++) { if (a[i].startsWith('--')) { i++; continue; } r.push(a[i]); } return r; };
 export const quadro = async (p, t, ficheiro, q = 92) => { await p.evaluate(t => window.renderAt(t), t); await p.screenshot({path: ficheiro, type: 'jpeg', quality: q}); };

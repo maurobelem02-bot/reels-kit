@@ -51,6 +51,10 @@ export function atualizar(t, m, s) { … põe tudo no sítio para o instante t (
 - **Câmara:** Hermite com tangentes monótonas (não recua antes das viagens), mão ao ombro, desfoque de movimento acima de 22 u/s, profundidade de campo por chave (`dof` em px no infinito; foco no alvo ou em `foco`).
 - **Interface:** legendas de 1 a 3 palavras (top 1340), @ pequeno por baixo (top 1490), cartão do CTA no terço de cima, flash.
 
+## Estilos 2D (A, B, D-G)
+As páginas 2D (Excel ao vivo, rota & custos, tipografia, WhatsApp, antes/depois, fatura) não usam o motor 3D: cada uma é um `video.html` com `window.renderAt(t)`, feito a partir de `excel_test.html` (A) ou `import_test.html` (B), com `core.js`, `motion.js` (`pop`, `rise`, `count`, `draw`, `along`), `excel.js`/`excel.css` e `base2d.css`.
+As ferramentas servem para as duas: `node stills.mjs st "1,2" --pagina video.html`, `node render.mjs --pagina video.html --dur 32`, `node syncsheet.mjs --pagina video.html`.
+
 ## Desempenho (Chrome por CPU, 2 núcleos)
 - ~1,7 s por frame com 2 processos (desfoque de lente ligado): 10 s ≈ 9 min, 45 s ≈ 38 min.
 - O MSAA custava ~4x o frame; está desligado e o SMAA no fim dá arestas iguais à vista.

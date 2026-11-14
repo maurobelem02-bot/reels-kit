@@ -1,11 +1,11 @@
-// Folha de sincronia: um quadro por linha do guião, logo a seguir ao início da palavra (tempo da ação + 3 frames),
+// [--pagina video.html]  Folha de sincronia: um quadro por linha do guião, logo a seguir ao início da palavra (tempo da ação + 3 frames),
 // com a palavra e a ação escritas por baixo. Uso: node syncsheet.mjs  (lê tempos.json + guiao.json) -> sync_sheet.jpg
 // Em cada quadro, a ação dessa linha TEM de estar visível. Se não estiver, a imagem está atrasada ou fora do plano.
 import fs from 'fs'; import {execFileSync} from 'child_process';
-import {abrir, quadro} from './browser.mjs';
+import {abrir, quadro, opcao} from './browser.mjs';
 const T = JSON.parse(fs.readFileSync('tempos.json')); let G = JSON.parse(fs.readFileSync('guiao.json')); G = G.linhas || G;
 fs.rmSync('sync', {recursive: true, force: true}); fs.mkdirSync('sync');
-const {pages, fechar} = await abrir('index.html', 1);
+const {pages, fechar} = await abrir(opcao('pagina', 'index.html'), 1);
 const limpa = s => (s || '').replace(/['":\\%]/g, ' ').slice(0, 34);
 for (let i = 0; i < G.length; i++) {
   const r = G[i], t = T[r.id] + 3 / 30, n = String(i).padStart(3, '0');

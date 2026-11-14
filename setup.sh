@@ -10,6 +10,7 @@ ASSETS="${ASSETS:-$HOME/assets}"
 mkdir -p "$PROJ/m" "$ASSETS"
 cp -r "$KIT/motor/." "$PROJ/"
 cp "$KIT/ferramentas/"* "$PROJ/"
+cp "$KIT/motor2d/"* "$PROJ/"            # estilos 2D (A, B, D-G): páginas próprias com renderAt(t)
 [ -f "$PROJ/story.js" ] || cp "$KIT/exemplo/"* "$PROJ/"
 cd "$PROJ"
 [ -f package.json ] || npm init -y >/dev/null

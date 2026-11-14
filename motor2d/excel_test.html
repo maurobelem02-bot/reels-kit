@@ -1,0 +1,14 @@
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="base2d.css"><link rel="stylesheet" href="excel.css">
+<style>body{background:linear-gradient(160deg,#0f2027,#203a43 55%,#2c5364)}#stage{transform-origin:50% 50%}</style></head><body>
+<div id="stage"></div><div id="ui"><div class="title" id="hook" style="top:180px;color:#fff">PARA DE SOMAR<br><span style="color:#ffd21f">À MÃO</span></div><div id="cap"></div></div>
+<script type="module">
+import {excel,typed} from './excel.js';import {captions,timeWords,prog,lerp} from './core.js';
+const xl=excel(document.getElementById('stage'),{cols:3,rows:9,colW:[300,220,160]});
+const rows=[['Produto','Custo (MT)'],['Telemóveis','45 000'],['Capas','3 200'],['Carregadores','6 800'],['Frete','12 500'],['Despacho','8 000']];
+rows.forEach((r,i)=>{xl.set('A'+(i+1),r[0],i?'':'hd');xl.set('B'+(i+1),r[1],i?'num':'hd');});xl.set('C1','','hd');xl.set('A8','TOTAL','b');
+const words=timeWords('Para de somar à mão. Uma fórmula faz o trabalho.',0,4,['fórmula']);
+const F='=SOMA(B2:B6)';
+window.renderAt=t=>{const z=lerp(1,1.12,prog(t,0,4));document.getElementById('stage').style.transform=`scale(${z})`;
+ hook.style.opacity=1-prog(t,1.6,1.9);xl.cursor('B6','B8',prog(t,1.2,1.8));
+ const s=typed(F,t,1.9,1.3);xl.set('B8',t<3.3?s:'75 500',t<3.3?'b':'num b ok');xl.fx('B8',s);xl.select(t>2.6&&t<3.3?'B2:B6':null);captions(words,t);};
+</script></body></html>
