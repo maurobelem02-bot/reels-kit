@@ -198,10 +198,11 @@ export async function criarMotor(cfg) {
     const bob = op.mode === 'stroll' || op.mode === 'march' ? Math.abs(Math.sin(t * 8)) * .05 : Math.sin(t * 2.2 + s) * .012;
     card.position.y = bob + (op.salto || 0);
     card.scale.set(1 + (op.squash || 0), 1 - (op.squash || 0), 1);
-    const wp = p.getWorldPosition(new T.Vector3());
-    card.rotation.y = Math.atan2(cam.position.x - wp.x, cam.position.z - wp.z) - p.rotation.y;
     card.rotation.z = op.inclina || 0;
+    cartoes.add(p);                       // a orientação para a câmara é feita em m.frame, DEPOIS de a câmara se mexer
   };
+  const cartoes = new Set();
+  const virarCartoes = () => { const wp = new T.Vector3(); for (const p of cartoes) { p.getWorldPosition(wp); p.userData.card.rotation.y = Math.atan2(cam.position.x - wp.x, cam.position.z - wp.z) - p.rotation.y; } };
 
   // ---------- animações de objeto ----------
   // cai do céu e aterra EXATAMENTE em tAterra, com esmagamento e ressalto (pó: m.fx.po)
@@ -304,6 +305,7 @@ export async function criarMotor(cfg) {
     cam.position.set(c.pos[0] + mao[0] + sh, Math.max(1.3, c.pos[1] + mao[1] + sh * .5), c.pos[2]);
     cam.fov = c.fov; cam.updateProjectionMatrix(); cam.lookAt(...c.alvo);
     if (extra.rolo) cam.rotateZ(extra.rolo * Math.PI / 180);
+    scene.updateMatrixWorld(); virarCartoes();
     const vel = Math.hypot(...c.pos.map((v, i) => v - c0.pos[i])) * FPS;
     r.domElement.style.filter = vel > 22 ? `blur(${Math.min(6, (vel - 22) * .12).toFixed(1)}px)` : '';
     // luz: sol segue o ponto para onde a câmara olha
