@@ -18,10 +18,12 @@ cortes = [round(float(x), 2) for x in re.findall(r'pts_time:([0-9.]+)', log)]
 
 # 2. folha de frames (0,5 s) com o tempo escrito + frames soltos a cada 2 s
 for f in glob.glob(os.path.join(out, 'f_*.jpg')): os.remove(f)
+fr_s = run('ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=r_frame_rate', '-of', 'csv=p=0', src).stdout.strip().split('/')
+fps_v = float(fr_s[0]) / float(fr_s[1] if len(fr_s) > 1 else 1); passo = max(1, round(fps_v / 2))   # frames EXATOS a cada 0,5 s
 n = max(1, int(dur * 2)); cols = 8; rows = (n + cols - 1) // cols
 run('ffmpeg', '-v', 'error', '-y', '-i', src, '-vf',
-    f"fps=2,scale=200:-2,drawtext=text='%{{pts\\:hms}}':x=4:y=4:fontsize=16:fontcolor=white:box=1:boxcolor=black@0.6,tile={cols}x{rows}:padding=4:color=white",
-    '-frames:v', '1', os.path.join(out, 'folha.jpg'))
+    f"select='not(mod(n\\,{passo}))',drawtext=text='%{{pts\\:hms}}':x=8:y=8:fontsize=44:fontcolor=white:box=1:boxcolor=black@0.6,scale=200:-2,tile={cols}x{rows}:padding=4:color=white",
+    '-frames:v', '1', '-fps_mode', 'passthrough', os.path.join(out, 'folha.jpg'))
 run('ffmpeg', '-v', 'error', '-y', '-i', src, '-vf', 'fps=0.5,scale=540:-2', os.path.join(out, 'f_%03d.jpg'))
 
 # 3. movimento: diferença média entre frames a 10 fps (0 = parado, >15 = muito movimento)
