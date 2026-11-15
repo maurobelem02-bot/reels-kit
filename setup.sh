@@ -14,6 +14,8 @@ cp "$KIT/motor2d/"* "$PROJ/"            # estilos 2D (A, B, D-G): páginas próp
 [ -f "$PROJ/story.js" ] || cp "$KIT/exemplo/"* "$PROJ/"
 cd "$PROJ"
 [ -f package.json ] || npm init -y >/dev/null
+[ -d node_modules/@fontsource/poppins ] || npm i -s @fontsource/poppins   # fonte das páginas 2D (dividido.html)
+if [ -n "${SO2D:-}" ]; then echo "ok: projeto 2D em $PROJ (sem three nem modelos). Parte de dividido.html -> video.html"; exit 0; fi
 [ -d node_modules/postprocessing ] || npm i -s three@0.170 postprocessing@6.36
 for r in KayKit-City-Builder-Bits-1.0 KayKit-Restaurant-Bits-1.0; do
   [ -d "$ASSETS/$r" ] || git clone -q --depth 1 "https://github.com/KayKit-Game-Assets/$r" "$ASSETS/$r"

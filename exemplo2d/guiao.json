@@ -1,0 +1,364 @@
+{
+ "bpm": 108,
+ "linhas": [
+  {
+   "id": "g0",
+   "palavra": "Dois",
+   "acao": "os dois amigos lado a lado, cada um com o seu portatil",
+   "dt": -1
+  },
+  {
+   "id": "importar",
+   "palavra": "importar",
+   "acao": "uma caixa cai sobre cada um",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "china",
+   "palavra": "China",
+   "acao": "as caixas aterram",
+   "sfx": "thud"
+  },
+  {
+   "id": "dia",
+   "palavra": "dia",
+   "acao": "calendario DIA 1 salta na linha do meio",
+   "sfx": "pop"
+  },
+  {
+   "id": "zero",
+   "palavra": "zero",
+   "acao": "quadro VENDAS 0 dos dois lados",
+   "sfx": "pop"
+  },
+  {
+   "id": "ano",
+   "palavra": "ano",
+   "acao": "as folhas do calendario viram ate 1 ANO",
+   "sfx": "flash"
+  },
+  {
+   "id": "soUm",
+   "palavra": "só",
+   "acao": "a linha de vendas do Zito sobe, a do Helio fica no zero",
+   "sfx": "ting"
+  },
+  {
+   "id": "vender",
+   "palavra": "vender",
+   "acao": "Zito festeja, Helio apaga-se",
+   "sfx": "sparkle"
+  },
+  {
+   "id": "porque",
+   "palavra": "Porquê",
+   "acao": "ponto de interrogacao gigante no meio",
+   "sfx": "boing"
+  },
+  {
+   "id": "helio",
+   "palavra": "Hélio",
+   "acao": "etiqueta HELIO",
+   "sfx": "pop"
+  },
+  {
+   "id": "zito",
+   "palavra": "Zito",
+   "acao": "etiqueta ZITO",
+   "sfx": "pop"
+  },
+  {
+   "id": "idade",
+   "palavra": "idade",
+   "acao": "icone da idade igual dos dois lados",
+   "sfx": "pop"
+  },
+  {
+   "id": "salario",
+   "palavra": "salário",
+   "acao": "nota de salario igual dos dois lados",
+   "sfx": "pop"
+  },
+  {
+   "id": "vontade",
+   "palavra": "vontade",
+   "acao": "pasta do emprego dos dois lados",
+   "sfx": "pop"
+  },
+  {
+   "id": "emprego",
+   "palavra": "emprego",
+   "acao": "as pastas saltam para fora",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "hSolo",
+   "palavra": "Hélio",
+   "acao": "o lado do Helio abre e ocupa o ecra",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "certo",
+   "palavra": "certo",
+   "acao": "lista de regras, os vistos marcam um a um",
+   "sfx": "ting"
+  },
+  {
+   "id": "curso1",
+   "palavra": "curso",
+   "acao": "cartao CURSO 1 com carimbo COMPRADO",
+   "sfx": "thud"
+  },
+  {
+   "id": "curso2",
+   "palavra": "outro",
+   "acao": "cartao CURSO 2 com carimbo",
+   "sfx": "thud"
+  },
+  {
+   "id": "lista1",
+   "palavra": "lista",
+   "acao": "folha LISTA, as linhas escrevem-se",
+   "sfx": "pop"
+  },
+  {
+   "id": "apaga1",
+   "palavra": "apagou",
+   "acao": "as linhas apagam-se",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "lista2",
+   "palavra": "novo",
+   "acao": "as linhas escrevem-se de novo",
+   "sfx": "click"
+  },
+  {
+   "id": "apaga2",
+   "palavra": "apagou",
+   "acao": "apaga outra vez, a folha vai para o lixo",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "noite",
+   "palavra": "noite",
+   "acao": "escurece, lua, relogio roda 22h ate 03h",
+   "sfx": "flash"
+  },
+  {
+   "id": "pProduto",
+   "palavra": "produto",
+   "acao": "pesquisa escreve produto perfeito",
+   "sfx": "click"
+  },
+  {
+   "id": "pVendedor",
+   "palavra": "vendedor",
+   "acao": "pesquisa escreve vendedor perfeito",
+   "sfx": "click"
+  },
+  {
+   "id": "pMomento",
+   "palavra": "momento",
+   "acao": "pesquisa escreve momento perfeito",
+   "sfx": "click"
+  },
+  {
+   "id": "pedido",
+   "palavra": "pedido",
+   "acao": "botao FAZER PEDIDO, o cursor vai ate ele",
+   "sfx": "pop"
+  },
+  {
+   "id": "pensava",
+   "palavra": "pensava",
+   "acao": "o cursor para e treme, balao de pensamento"
+  },
+  {
+   "id": "naoPronto",
+   "palavra": "ainda",
+   "acao": "o botao fica cinzento com X, o cursor recua",
+   "sfx": "crash"
+  },
+  {
+   "id": "zSolo",
+   "palavra": "Zito",
+   "acao": "o ecra desliza para o lado do Zito",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "metade",
+   "palavra": "metade",
+   "acao": "barra do saber enche so ate meio",
+   "sfx": "pop"
+  },
+  {
+   "id": "escolheu",
+   "palavra": "escolheu",
+   "acao": "grelha de 9 produtos",
+   "sfx": "pop"
+  },
+  {
+   "id": "coisaSo",
+   "palavra": "coisa",
+   "acao": "a mira fixa um so produto, os outros apagam",
+   "sfx": "ting"
+  },
+  {
+   "id": "capas",
+   "palavra": "Capas",
+   "acao": "capa de telemovel em grande",
+   "sfx": "pop"
+  },
+  {
+   "id": "mandou",
+   "palavra": "Mandou",
+   "acao": "as capas chegam uma a uma, contador sobe",
+   "sfx": "click"
+  },
+  {
+   "id": "dez",
+   "palavra": "dez",
+   "acao": "contador chega a 10",
+   "sfx": "ding"
+  },
+  {
+   "id": "fotos",
+   "palavra": "fotos",
+   "acao": "flash, tres fotos das capas",
+   "sfx": "flash"
+  },
+  {
+   "id": "estado",
+   "palavra": "estado",
+   "acao": "anel do estado do WhatsApp com a foto",
+   "sfx": "pop"
+  },
+  {
+   "id": "vinte",
+   "palavra": "Vinte",
+   "acao": "20 pessoas aparecem, contador 20",
+   "sfx": "pop"
+  },
+  {
+   "id": "dezanove",
+   "palavra": "Dezanove",
+   "acao": "19 apagam-se uma a uma",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "nada",
+   "palavra": "nada",
+   "acao": "todas cinzentas, Zito fica triste"
+  },
+  {
+   "id": "umaResp",
+   "palavra": "uma",
+   "acao": "uma acende, balao Quanto custa",
+   "sfx": "ding"
+  },
+  {
+   "id": "pouco",
+   "palavra": "pouco",
+   "acao": "uma moeda pequena",
+   "sfx": "cash"
+  },
+  {
+   "id": "primeira",
+   "palavra": "primeira",
+   "acao": "carimbo 1.a CLIENTE, Zito festeja",
+   "sfx": "thud"
+  },
+  {
+   "id": "tratou",
+   "palavra": "tratou-a",
+   "acao": "caixa com laco e coracao para a cliente",
+   "sfx": "sparkle"
+  },
+  {
+   "id": "maior",
+   "palavra": "maior",
+   "acao": "coroa na cliente",
+   "sfx": "ting"
+  },
+  {
+   "id": "trouxe",
+   "palavra": "trouxe",
+   "acao": "linha desenha-se da cliente",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "prima",
+   "palavra": "prima",
+   "acao": "a prima aparece",
+   "sfx": "pop"
+  },
+  {
+   "id": "anoDepois",
+   "palavra": "ano",
+   "acao": "flash, volta o ecra dividido, calendario 1 ANO",
+   "sfx": "flash"
+  },
+  {
+   "id": "caixas",
+   "palavra": "caixas",
+   "acao": "caixas empilham-se no lado do Zito",
+   "sfx": "thud"
+  },
+  {
+   "id": "meses",
+   "palavra": "todos",
+   "acao": "12 barras crescem uma a uma",
+   "sfx": "click"
+  },
+  {
+   "id": "eHelio",
+   "palavra": "Hélio",
+   "acao": "o ecra abre para o Helio",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "quarto",
+   "palavra": "quarto",
+   "acao": "4 cartoes de curso com carimbo",
+   "sfx": "thud"
+  },
+  {
+   "id": "listaFim",
+   "palavra": "lista",
+   "acao": "a folha LISTA vazia",
+   "sfx": "pop"
+  },
+  {
+   "id": "naoPronta",
+   "palavra": "não",
+   "acao": "teia de aranha na folha, X vermelho",
+   "sfx": "crash"
+  },
+  {
+   "id": "fim1",
+   "palavra": "Zito",
+   "acao": "fundo marinho, frase escreve-se",
+   "sfx": "whoosh",
+   "dt": -0.25
+  },
+  {
+   "id": "fim2",
+   "palavra": "Foi",
+   "acao": "FOI O UNICO em grande",
+   "sfx": "virada"
+  },
+  {
+   "id": "comecou",
+   "palavra": "começou",
+   "acao": "COMECOU salta, sublinhado desenha-se",
+   "sfx": "ding"
+  },
+  {
+   "id": "cta",
+   "apos": 1.2,
+   "acao": "caixa de comentarios escreve COMECAR",
+   "sfx": "cash"
+  }
+ ]
+}

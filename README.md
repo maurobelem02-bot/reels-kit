@@ -55,6 +55,13 @@ export function atualizar(t, m, s) { … põe tudo no sítio para o instante t (
 As páginas 2D (Excel ao vivo, rota & custos, tipografia, WhatsApp, antes/depois, fatura) não usam o motor 3D: cada uma é um `video.html` com `window.renderAt(t)`, feito a partir de `excel_test.html` (A) ou `import_test.html` (B), com `core.js`, `motion.js` (`pop`, `rise`, `count`, `draw`, `along`), `excel.js`/`excel.css` e `base2d.css`.
 As ferramentas servem para as duas: `node stills.mjs st "1,2" --pagina video.html`, `node render.mjs --pagina video.html --dur 32`, `node syncsheet.mjs --pagina video.html`.
 
+### Estilo I: ecrã dividido (duas personagens em espelho)
+`motor2d/dividido.html` é o vídeo "Hélio e Zito" (aprovado a 100%). Para um vídeo novo: `SO2D=1 bash setup.sh proj`, copia `dividido.html` para `video.html` e muda as peças e a linha do tempo; `exemplo2d/` tem o roteiro e o `guiao.json` desse vídeo.
+- Dois painéis (`#L`, `#R`) cortados por `split(t)`: 0,5 = dividido, 1 = só a esquerda, 0 = só a direita. Cada painel tem um contentor de 1080x1920 centrado na personagem.
+- `pessoa()` + `posar()` (expressões smile, neutral, sad, shock, laugh, nervous; pisca e respira), `V()` entra com mola e sai, `fall()` cai e aterra na palavra.
+- Todos os tempos vêm de `tempos.json` (`T.id`); as legendas de 2 a 3 palavras vêm de `palavras.json` + `roteiro.txt`.
+- Sem voz ainda: `python3 -I est.py roteiro.txt` cria um `palavras.json` estimado para montar e ver o storyboard; quando o MP3 chegar, `timing.py` (ou Scribe) + `cues.py` e render.
+
 ## Desempenho (Chrome por CPU, 2 núcleos)
 - ~1,7 s por frame com 2 processos (desfoque de lente ligado): 10 s ≈ 9 min, 45 s ≈ 38 min.
 - O MSAA custava ~4x o frame; está desligado e o SMAA no fim dá arestas iguais à vista.
