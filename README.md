@@ -71,3 +71,10 @@ As ferramentas servem para as duas: `node stills.mjs st "1,2" --pagina video.htm
 - Motor e ferramentas: deste projeto.
 - `motor/vendor/` (toon, lensblur, shade, paint, grade, ink, cardshade): de [mromidev/claude-animated-shorts](https://github.com/mromidev/claude-animated-shorts), MIT (ver `LICENSE-mromidev`), convertidos de TypeScript.
 - Modelos KayKit: CC0, descarregados pelo `setup.sh`.
+
+## Estilo K: Placa de luz (`motor2d/placa.html`)
+Placa em 3D, ponto de luz que desenha cada peça em linha fina e torre de placas no fecho. Vídeo "Importar da China são só nove peças" (nov. 2026); roteiro e guião em `exemplo_placa/`.
+- Copiar `placa.html` para `video.html` e trocar só a lista `L` (frases, ecrãs de texto e desenho de cada camada). Os tempos saem de `palavras.json`.
+- `window.MAXB()` devolve o fundo do texto mais baixo: tem de ficar acima do @ (top 1548).
+- Música: `python3 musica2.py DURACAO T_VIRADA musica/motivacional.wav` e depois `mix.py … --musica musica/motivacional.wav --mdb -19 --sdb -15`.
+- Não pôr `opacity` abaixo de 1 no `#iso`: achata o 3D e a torre vira uma placa só.

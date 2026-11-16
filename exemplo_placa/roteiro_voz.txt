@@ -1,0 +1,11 @@
+[excited] Importar da China são só NOVE peças!
+[curious] Queres vender uma coisa que aqui é cara? Então procuras lá fora, onde é barata. [excited] Esse é o PRODUTO!
+[sighs] Mas não podes ir à China ver as lojas. [excited] Então abres um aplicativo onde as fábricas mostram TUDO o que vendem. Essa é a PLATAFORMA!
+[surprised] Mas lá dentro há MILHARES de vendedores! [warmly] Então escolhes um que vende o que procuras. Esse é o FORNECEDOR.
+[sarcastic] Mas a foto do produto é bonita… [nervous] e o produto pode não ter qualidade. [excited] Então lês os comentários de quem já comprou. Essas são as AVALIAÇÕES!
+[warmly] Agora tens a certeza, e chegou a hora de pagar. [gasps] [nervous] Mas se mandares o dinheiro direto ao vendedor, ele pode SUMIR! [excited] Então pagas DENTRO da plataforma. Se a encomenda não chegar, ela devolve-te o dinheiro. Esse é o PAGAMENTO SEGURO!
+[curious] Mas a encomenda está do outro lado do mar… [excited] Então pagas um lugar no navio. Esse é o FRETE!
+[dramatically] Mas no porto, ela não sai sem papéis. [warmly] Então uma empresa, como a Maubel, trata dos papéis por ti. Esse é o AGENTE.
+[surprised] Mas pagaste o produto, o navio E as taxas! [excited] Então somas TUDO antes de pôr o preço. Esse é o CUSTO TOTAL!
+[chuckles] Mas se venderes pelo que gastaste, trabalhaste de graça. [excited] Então pões um bocado por cima. Essa é a MARGEM!
+[short pause] [laughs] Parabéns! [excited] Aprendeste a fazer uma importação. [warmly] Agora já sabes o nome de cada peça.

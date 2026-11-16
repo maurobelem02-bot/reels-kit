@@ -1,0 +1,344 @@
+{
+ "bpm": 108,
+ "linhas": [
+  {
+   "id": "gancho",
+   "palavra": "Importar",
+   "acao": "gancho escrito; grelha de 9 quadrados na placa"
+  },
+  {
+   "id": "nove",
+   "palavra": "nove",
+   "acao": "os 9 quadrados acendem a verde",
+   "sfx": "ting"
+  },
+  {
+   "id": "c1_0",
+   "palavra": "Queres",
+   "acao": "placa nova; ponto de luz desenha a etiqueta de preco",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "c1_1",
+   "palavra": "cara",
+   "acao": "seta vermelha para cima na etiqueta"
+  },
+  {
+   "id": "c1_2",
+   "palavra": "Então",
+   "acao": "desenha a caixa do produto"
+  },
+  {
+   "id": "c1_3",
+   "palavra": "barata",
+   "acao": "seta verde para baixo"
+  },
+  {
+   "id": "c1_4",
+   "palavra": "Esse",
+   "acao": "caixa acende; nome PRODUTO",
+   "sfx": "ting"
+  },
+  {
+   "id": "c2_0",
+   "palavra": "Mas",
+   "acao": "placa nova, borda vermelha; ponto de interrogacao",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "c2_1",
+   "palavra": "lojas",
+   "acao": "interrogacao completa"
+  },
+  {
+   "id": "c2_2",
+   "palavra": "Então",
+   "acao": "desenha o telemovel"
+  },
+  {
+   "id": "c2_3",
+   "palavra": "aplicativo",
+   "acao": "barra de pesquisa no ecra"
+  },
+  {
+   "id": "c2_4",
+   "palavra": "fábricas",
+   "acao": "grelha de produtos, um a um"
+  },
+  {
+   "id": "c2_5",
+   "palavra": "Essa",
+   "acao": "ecra acende; nome PLATAFORMA",
+   "sfx": "ting"
+  },
+  {
+   "id": "c3_0",
+   "palavra": "Mas",
+   "acao": "placa nova; comecam a aparecer vendedores",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "c3_1",
+   "palavra": "milhares",
+   "acao": "12 vendedores na placa"
+  },
+  {
+   "id": "c3_2",
+   "palavra": "Então",
+   "acao": "os outros apagam-se"
+  },
+  {
+   "id": "c3_3",
+   "palavra": "um",
+   "acao": "anel verde escolhe um vendedor"
+  },
+  {
+   "id": "c3_4",
+   "palavra": "Esse",
+   "acao": "visto no escolhido; nome FORNECEDOR",
+   "sfx": "ting"
+  },
+  {
+   "id": "c4_0",
+   "palavra": "Mas",
+   "acao": "placa nova; desenha a foto do produto",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "c4_1",
+   "palavra": "foto",
+   "acao": "moldura com paisagem"
+  },
+  {
+   "id": "c4_2",
+   "palavra": "qualidade",
+   "acao": "interrogacao vermelha ao lado da foto"
+  },
+  {
+   "id": "c4_3",
+   "palavra": "Então",
+   "acao": "estrelas desenham-se uma a uma"
+  },
+  {
+   "id": "c4_4",
+   "palavra": "comentários",
+   "acao": "balao de comentario com linhas"
+  },
+  {
+   "id": "c4_5",
+   "palavra": "Essas",
+   "acao": "estrelas acendem; nome AVALIACOES",
+   "sfx": "ting"
+  },
+  {
+   "id": "c5_0",
+   "palavra": "Agora",
+   "acao": "placa nova",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "c5_1",
+   "palavra": "pagar",
+   "acao": "moeda desenha-se"
+  },
+  {
+   "id": "c5_2",
+   "palavra": "Mas",
+   "acao": "borda vermelha; seta leva o dinheiro para fora"
+  },
+  {
+   "id": "c5_3",
+   "palavra": "sumir",
+   "acao": "X vermelho na moeda"
+  },
+  {
+   "id": "c5_4",
+   "palavra": "Então",
+   "acao": "escudo desenha-se a volta da moeda"
+  },
+  {
+   "id": "c5_5",
+   "palavra": "dentro",
+   "acao": "escudo fecha"
+  },
+  {
+   "id": "c5_6",
+   "palavra": "devolve-te",
+   "acao": "seta de retorno e visto verde"
+  },
+  {
+   "id": "c5_7",
+   "palavra": "Esse",
+   "acao": "escudo acende; nome PAGAMENTO SEGURO",
+   "sfx": "ting"
+  },
+  {
+   "id": "c6_0",
+   "palavra": "Mas",
+   "acao": "placa nova; ondas",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "c6_1",
+   "palavra": "mar",
+   "acao": "segunda onda"
+  },
+  {
+   "id": "c6_2",
+   "palavra": "Então",
+   "acao": "casco do navio"
+  },
+  {
+   "id": "c6_3",
+   "palavra": "lugar",
+   "acao": "contentor verde no navio"
+  },
+  {
+   "id": "c6_4",
+   "palavra": "Esse",
+   "acao": "navio acende; nome FRETE",
+   "sfx": "ting"
+  },
+  {
+   "id": "c7_0",
+   "palavra": "Mas",
+   "acao": "placa nova; poste da cancela",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "c7_1",
+   "palavra": "sai",
+   "acao": "cancela vermelha fecha"
+  },
+  {
+   "id": "c7_2",
+   "palavra": "Então",
+   "acao": "documento desenha-se"
+  },
+  {
+   "id": "c7_3",
+   "palavra": "Maubel",
+   "acao": "linhas do documento"
+  },
+  {
+   "id": "c7_4",
+   "palavra": "papéis",
+   "acao": "carimbo verde com visto"
+  },
+  {
+   "id": "c7_5",
+   "palavra": "Esse",
+   "acao": "cancela levanta e fica verde; nome AGENTE",
+   "sfx": "ting"
+  },
+  {
+   "id": "c8_0",
+   "palavra": "Mas",
+   "acao": "placa nova; primeira linha da conta",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "c8_1",
+   "palavra": "navio",
+   "acao": "segunda linha"
+  },
+  {
+   "id": "c8_2",
+   "palavra": "taxas",
+   "acao": "terceira linha"
+  },
+  {
+   "id": "c8_3",
+   "palavra": "Então",
+   "acao": "risco da soma"
+  },
+  {
+   "id": "c8_4",
+   "palavra": "tudo",
+   "acao": "caixa do total a verde"
+  },
+  {
+   "id": "c8_5",
+   "palavra": "Esse",
+   "acao": "total acende; nome CUSTO TOTAL",
+   "sfx": "ting"
+  },
+  {
+   "id": "c9_0",
+   "palavra": "Mas",
+   "acao": "placa nova; duas barras iguais",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "c9_1",
+   "palavra": "graça",
+   "acao": "sinal de igual vermelho entre as barras"
+  },
+  {
+   "id": "c9_2",
+   "palavra": "Então",
+   "acao": "bloco verde por cima da barra"
+  },
+  {
+   "id": "c9_3",
+   "palavra": "cima",
+   "acao": "seta verde para cima"
+  },
+  {
+   "id": "c9_4",
+   "palavra": "Essa",
+   "acao": "bloco acende; nome MARGEM",
+   "sfx": "ting"
+  },
+  {
+   "id": "parabens",
+   "palavra": "Parabéns",
+   "acao": "as 9 placas abrem em torre; confetti; PARABENS",
+   "sfx": "virada"
+  },
+  {
+   "id": "aprendeste",
+   "palavra": "Aprendeste",
+   "acao": "texto: aprendeste a fazer",
+   "sfx": "whoosh"
+  },
+  {
+   "id": "importacao",
+   "palavra": "importação",
+   "acao": "uma IMPORTACAO em grande",
+   "sfx": "sparkle"
+  },
+  {
+   "id": "agora",
+   "palavra": "Agora",
+   "acao": "texto: agora ja sabes o nome de"
+  },
+  {
+   "id": "nome",
+   "palavra": "nome",
+   "acao": "nomes das pecas aparecem ao lado das placas"
+  },
+  {
+   "id": "peca",
+   "palavra": "peça",
+   "acao": "cada PECA; ultimas etiquetas",
+   "sfx": "ting"
+  },
+  {
+   "id": "cta",
+   "apos": 0.9,
+   "acao": "cartao: Segue @maurobelem1",
+   "sfx": "pop"
+  },
+  {
+   "id": "seguir",
+   "apos": 1.4,
+   "acao": "clique no botao Seguir -> A seguir"
+  },
+  {
+   "id": "fimcta",
+   "apos": 0.8,
+   "acao": "cartao respira ate ao fim"
+  }
+ ]
+}

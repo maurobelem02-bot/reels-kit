@@ -1,0 +1,250 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:#061734}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:Inter,sans-serif;
+ background:radial-gradient(ellipse 85% 55% at 50% 38%,#143f86 0%,#0a2a5c 46%,#061734 100%)}
+#pts{position:absolute;inset:0}
+#ghost{position:absolute;left:140px;top:150px;width:800px;height:800px;filter:blur(13px);opacity:.1;transform:rotate(-14deg) scale(1.15)}
+#prog{position:absolute;left:169px;top:236px;display:flex;gap:14px}
+#prog i{display:block;width:70px;height:8px;border-radius:4px;background:rgba(255,255,255,.16);overflow:hidden}
+#prog i b{display:block;height:100%;width:0;background:#9be8b4;border-radius:4px}
+#iso{position:absolute;left:540px;top:700px;width:0;height:0;transform-style:preserve-3d}
+.plate{position:absolute;left:-350px;top:-350px;width:700px;height:700px;border-radius:84px;box-sizing:border-box;
+ border:3px solid rgba(255,255,255,.4);background:rgba(120,170,255,.07)}
+.plate svg{position:absolute;left:30px;top:30px;width:640px;height:640px;overflow:visible}
+.plate path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+#txt{position:absolute;left:84px;right:84px;top:1150px;text-align:center}
+.scr{position:absolute;left:0;right:0;top:0;opacity:0}
+.la{font:700 55px/1.2 Inter;color:#fff;letter-spacing:-.01em}
+.lb{font:italic 500 46px/1.24 Inter;color:#bfe6ff;margin-top:20px}
+.wd{opacity:0}
+#nm{position:absolute;left:60px;right:60px;top:1180px;text-align:center;opacity:0}
+#nm .lab{font:600 28px Inter;letter-spacing:.24em;color:#9be8b4}
+#nm .trm{font:italic 600 124px/1.08 Lora,serif;color:#fff;margin-top:16px}
+#nm .ul{height:7px;border-radius:4px;background:#9be8b4;margin:22px auto 0;width:0}
+#fim{position:absolute;left:60px;right:60px;top:1180px;text-align:center}
+#fim>div{position:absolute;left:0;right:0;top:0;opacity:0}
+#fim .sm{font:600 44px Inter;color:#bfe6ff}
+#fim .bg{font:italic 600 118px/1.1 Lora,serif;color:#fff;margin-top:10px}
+#fim .bg em{color:#9be8b4;font-style:italic}
+
+.tl{position:absolute;font:600 35px Inter;color:#fff;white-space:nowrap;opacity:0}
+.tl::before{content:'';display:inline-block;width:26px;height:3px;background:#9be8b4;vertical-align:middle;margin-right:12px}
+#at{position:absolute;left:0;right:0;top:1548px;text-align:center;font:500 26px Inter;color:#fff;opacity:.55}
+#cta{position:absolute;left:110px;right:110px;top:470px;background:#fff;border-radius:44px;padding:56px 40px 60px;text-align:center;opacity:0;
+ box-shadow:0 30px 80px rgba(0,0,0,.45)}
+#cta .c1{font:800 64px/1.15 Inter;color:#0a2a5c}
+#cta .c1 em{font-style:normal;color:#1f6fd6}
+#cta .c2{font:500 40px/1.3 Inter;color:#35507c;margin-top:18px}
+#btn{display:inline-block;margin-top:38px;padding:24px 70px;border-radius:60px;font:800 44px Inter;color:#fff;background:#1f6fd6}
+#cur{position:absolute;width:44px;height:44px;border-radius:50%;border:5px solid #0a2a5c;background:rgba(155,232,180,.8);opacity:0}
+#cf{position:absolute;inset:0;pointer-events:none}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style></head><body>
+<div id="stage">
+ <svg id="pts" viewBox="0 0 1080 1920"></svg>
+ <svg id="ghost" viewBox="0 0 640 640"><use id="guse" href="#art0" style="fill:none"/></svg>
+ <div id="prog"></div>
+ <div id="iso"></div>
+ <div id="txt"></div>
+ <div id="nm"><div class="lab" id="nlab"></div><div class="trm" id="ntrm"></div><div class="ul" id="nul"></div></div>
+ <div id="fim"><div id="f0"><div class="bg"><em>Parabéns.</em></div></div>
+  <div id="f1"><div class="sm">Aprendeste a fazer</div><div class="bg">uma <em>importação</em></div></div>
+  <div id="f2"><div class="sm">Agora já sabes o nome de</div><div class="bg">cada <em>peça</em></div></div></div>
+ <div id="lbls"></div>
+ <svg id="cf" viewBox="0 0 1080 1920"></svg>
+ <div id="cta"><div class="c1">Segue <em>@maurobelem1</em></div><div class="c2">para aprender a importar do zero</div><div id="btn">Seguir</div></div>
+ <div id="cur"></div>
+ <div id="at">@maurobelem1</div>
+ <div id="flash"></div>
+</div>
+<script type="module">
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),lerp=(a,b,k)=>a+(b-a)*k;
+const ease=k=>k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2,prog=(t,a,b)=>ease(clamp((t-a)/(b-a)));
+const lin=(t,a,b)=>clamp((t-a)/(b-a));
+const back=k=>{k=clamp(k);const c=1.9;return 1+(c+1)*Math.pow(k-1,3)+c*Math.pow(k-1,2);};
+function rng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let x=Math.imul(s^s>>>15,1|s);x=x+Math.imul(x^x>>>7,61|x)^x;return((x^x>>>14)>>>0)/4294967296;};}
+const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
+const LEAD=2/30,MINT='#9be8b4',RED='#ff7b7b';
+try{
+const W=await (await fetch('palavras.json')).json();
+
+// ---------- formas ----------
+const R=(x,y,w,h,r)=>`M${x+r},${y}h${w-2*r}a${r},${r} 0 0 1 ${r},${r}v${h-2*r}a${r},${r} 0 0 1 ${-r},${r}h${-(w-2*r)}a${r},${r} 0 0 1 ${-r},${-r}v${-(h-2*r)}a${r},${r} 0 0 1 ${r},${-r}z`;
+const C=(x,y,r)=>`M${x-r},${y}a${r},${r} 0 1 0 ${2*r},0a${r},${r} 0 1 0 ${-2*r},0z`;
+const P=(...p)=>'M'+p.map(q=>q.join(',')).join('L');
+const STAR=(cx,cy,ro)=>{const a=[];for(let i=0;i<10;i++){const r=i%2?ro*.44:ro,an=-Math.PI/2+i*Math.PI/5;a.push([(cx+r*Math.cos(an)).toFixed(1),(cy+r*Math.sin(an)).toFixed(1)]);}return P(...a)+'z';};
+const CHK=(x,y,s)=>P([x-s,y],[x-s*.3,y+s*.7],[x+s,y-s*.75]);
+const WAVE=y=>`M90,${y}q30,-26 60,0t60,0t60,0t60,0t60,0t60,0t60,0t60,0`;
+const QM='M250,250Q250,160 320,160Q395,160 395,235Q395,290 320,318L320,385';
+
+// ---------- camadas: frases (* = verde, _ = vermelho), ecrãs de texto, desenho ----------
+// cada elemento: d, c (w branco, m menta, r vermelho), s (frase onde se desenha), f [início,fim] dentro da frase,
+// tmp (apaga-se quando começa a solução), fill (enche no nome), fa (enche numa fração da frase)
+const L=[
+ {segs:['Importar da China são só *nove* *peças*.'],scr:[[0]],
+  art:[...Array(9)].map((_,i)=>({d:R(125+135*(i%3),125+135*Math.floor(i/3),120,120,22),c:'w',s:0,f:[0,0],fa:.1+i*.085}))},
+ {nome:'Produto',segs:['Queres vender uma coisa que aqui é _cara_.','Então procuras lá fora, onde é *barata*.','Esse é o produto.'],scr:[[0,1]],
+  art:[{d:P([400,120],[500,120],[548,168],[500,216],[400,216])+'z',c:'w',s:0,f:[.15,.6]},{d:C(500,168,10),c:'w',s:0,f:[.6,.7]},
+   {d:'M345,212L345,128M322,154L345,126L368,154',c:'r',s:0,f:[.72,1],tmp:1},
+   {d:R(150,275,300,240,22),c:'w',s:1,fill:1},{d:P([150,350],[450,350]),c:'w',s:1},{d:P([300,275],[300,350]),c:'w',s:1},{d:P([410,216],[385,275]),c:'w',s:1},
+   {d:'M345,128L345,212M322,186L345,214L368,186',c:'m',s:1}]},
+ {nome:'Plataforma',segs:['Mas não podes ir à China ver as _lojas_.','Então abres um *aplicativo* onde as fábricas mostram tudo o que vendem.','Essa é a plataforma.'],scr:[[0,1]],
+  art:[{d:QM,c:'r',s:0,f:[.25,.8],tmp:1},{d:C(320,455,8),c:'r',s:0,f:[.8,.9],tmp:1},
+   {d:R(190,60,260,520,42),c:'w',s:1,f:[.0,.3]},{d:R(220,108,200,46,23),c:'w',s:1,f:[.3,.4]},{d:C(246,131,9),c:'w',s:1,f:[.4,.44]},
+   {d:R(220,182,94,94,14),c:'w',s:1,f:[.46,.55]},{d:R(326,182,94,94,14),c:'w',s:1,f:[.55,.64]},{d:R(220,290,94,94,14),c:'w',s:1,f:[.64,.73]},
+   {d:R(326,290,94,94,14),c:'m',s:1,f:[.73,.82],fill:1},{d:R(220,398,94,94,14),c:'w',s:1,f:[.82,.9]},{d:R(326,398,94,94,14),c:'w',s:1,f:[.9,.97]},
+   {d:P([290,540],[350,540]),c:'w',s:1,f:[.97,1]}]},
+ {nome:'Fornecedor',segs:['Mas lá dentro há *milhares* de vendedores.','Então escolhes *um* que vende o que procuras.','Esse é o fornecedor.'],scr:[[0,1]],
+  art:[...[...Array(12)].map((_,i)=>{const x=155+110*(i%4),y=140+150*Math.floor(i/4);return{d:C(x,y,22)+`M${x-36},${y+72}q0,-42 36,-42q36,0 36,42`,c:'w',s:0,f:[.12+i*.07,.2+i*.07],dim:i!==6};}),
+   {d:C(375,322,84),c:'m',s:1,f:[.12,.5]},{d:C(452,246,26),c:'m',s:1,f:[.5,.62],fill:1},{d:CHK(452,247,12),c:'m',s:1,f:[.62,.72]}]},
+ {nome:'Avaliações',segs:['Mas a foto do produto é bonita, e o produto pode não ter _qualidade_.','Então lês os *comentários* de quem já comprou.','Essas são as avaliações.'],scr:[[0,1]],
+  art:[{d:R(180,70,280,200,20),c:'w',s:0,f:[.08,.3]},{d:P([205,245],[275,160],[325,215],[365,175],[435,245]),c:'w',s:0,f:[.3,.42]},{d:C(410,118,17),c:'w',s:0,f:[.42,.48]},
+   {d:'M490,110q0,-36 32,-36q34,0 34,34q0,25 -33,38l0,28',c:'r',s:0,f:[.62,.9],tmp:1},{d:C(523,212,6),c:'r',s:0,f:[.9,.96],tmp:1},
+   ...[0,1,2,3,4].map(i=>({d:STAR(140+90*i,345,38),c:'m',s:1,f:[.05+i*.1,.15+i*.1],fill:1})),
+   {d:R(120,420,400,130,26),c:'w',s:1,f:[.55,.8]},{d:P([160,462],[480,462]),c:'w',s:1,f:[.8,.9]},{d:P([160,505],[390,505]),c:'w',s:1,f:[.9,1]}]},
+ {nome:'Pagamento seguro',sol:2,segs:['Agora tens a *certeza*, e chegou a hora de pagar.','Mas se mandares o dinheiro direto ao vendedor, ele pode _sumir_.','Então pagas *dentro* da plataforma.','Se a encomenda não chegar, ela *devolve-te* o dinheiro.','Esse é o pagamento seguro.'],scr:[[0],[1],[2,3]],
+  art:[{d:C(320,325,96),c:'w',s:0,f:[.5,.85]},{d:C(320,325,66),c:'w',s:0,f:[.85,1]},
+   {d:P([430,325],[575,325])+'M545,298L577,325L545,352',c:'r',s:1,f:[.25,.6],tmp:1},{d:'M262,267L378,383M378,267L262,383',c:'r',s:1,f:[.78,1],tmp:1},
+   {d:'M320,95L525,165L525,335Q525,485 320,565Q115,485 115,335L115,165z',c:'m',s:2,f:[.1,.95],fill:1},
+   {d:'M250,470A160,160 0 0 0 420,455M395,430L424,456L390,482',c:'m',s:3,f:[.45,.8]},{d:CHK(320,330,34),c:'m',s:3,f:[.8,1]}]},
+ {nome:'Frete',segs:['Mas a encomenda está do outro lado do *mar*.','Então pagas um lugar no *navio*.','Esse é o frete.'],scr:[[0,1]],
+  art:[{d:WAVE(490),c:'w',s:0,f:[.3,.65]},{d:WAVE(540),c:'w',s:0,f:[.65,1]},
+   {d:P([130,372],[510,372],[462,446],[178,446])+'z',c:'w',s:1,f:[0,.3],fill:1},{d:R(195,292,88,80,9),c:'w',s:1,f:[.3,.42]},
+   {d:R(291,292,88,80,9),c:'m',s:1,f:[.42,.6],fill:1},{d:R(387,292,76,80,9),c:'w',s:1,f:[.6,.72]},{d:R(243,212,88,80,9),c:'w',s:1,f:[.72,.86]},
+   {d:P([475,292],[475,190],[425,190]),c:'w',s:1,f:[.86,1]}]},
+ {nome:'Agente',segs:['Mas no porto, ela não sai sem _papéis_.','Então uma empresa, como a *Maubel*, trata dos papéis por ti.','Esse é o agente.'],scr:[[0,1]],
+  art:[{d:R(110,430,36,140,9),c:'w',s:0,f:[.1,.35]},{d:P([146,455],[540,455]),c:'r',s:0,f:[.4,.8],arm:1},
+   {d:R(215,70,240,300,18),c:'w',s:1,f:[0,.35]},{d:P([252,130],[418,130]),c:'w',s:1,f:[.35,.45]},{d:P([252,180],[418,180]),c:'w',s:1,f:[.45,.55]},{d:P([252,230],[360,230]),c:'w',s:1,f:[.55,.62]},
+   {d:C(405,318,60),c:'m',s:1,f:[.66,.86],fill:1},{d:CHK(405,320,27),c:'m',s:1,f:[.86,1]}]},
+ {nome:'Custo total',segs:['Mas pagaste o produto, o navio e as taxas.','Então somas *tudo* antes de pôr o preço.','Esse é o custo total.'],scr:[[0,1]],
+  art:[...[0,1,2].flatMap(i=>{const y=130+85*i,a=[.18,.5,.76][i],b=[.48,.74,1][i];return[{d:C(150,y,17),c:'w',s:0,f:[a,lerp(a,b,.3)]},{d:P([195,y],[385,y]),c:'w',s:0,f:[lerp(a,b,.3),lerp(a,b,.75)]},{d:P([430,y],[510,y]),c:'w',s:0,f:[lerp(a,b,.75),b]}];}),
+   {d:P([120,372],[520,372]),c:'w',s:1,f:[0,.25]},{d:'M135,470L175,470M155,450L155,490',c:'m',s:1,f:[.25,.36]},
+   {d:R(200,415,320,112,26),c:'m',s:1,f:[.36,.8],fill:1},{d:P([240,471],[330,471]),c:'w',s:1,f:[.8,.9]},{d:P([390,471],[480,471]),c:'m',s:1,f:[.9,1]}]},
+ {nome:'Margem',segs:['Mas se venderes pelo que gastaste, trabalhaste de _graça_.','Então pões um bocado por *cima*.','Essa é a margem.'],scr:[[0,1]],
+  art:[{d:P([100,545],[540,545]),c:'w',s:0,f:[.05,.2]},{d:R(150,285,130,260,12),c:'w',s:0,f:[.2,.45]},{d:R(360,285,130,260,12),c:'w',s:0,f:[.45,.7]},
+   {d:'M293,385L347,385M293,418L347,418',c:'r',s:0,f:[.78,.96],tmp:1},
+   {d:R(360,170,130,105,12),c:'m',s:1,f:[.1,.6],fill:1},{d:'M425,148L425,72M398,102L425,70L452,102',c:'m',s:1,f:[.65,1]}]},
+ {fim:1,segs:['Parabéns.','Aprendeste a fazer uma importação.','Agora já sabes o nome de cada peça.'],scr:[],art:[]}
+];
+const NP=9;
+
+// ---------- tempos: cada frase vai buscar as suas palavras a palavras.json ----------
+let k=0;
+for(const l of L){l.S=l.segs.map(txt=>{const ws=txt.split(/\s+/).map(w=>{const cls=w.includes('*')?'hm':w.includes('_')?'hr':'';return{w:w.replace(/[*_]/g,''),cls};});
+  const o={ws,k0:k};ws.forEach((w,i)=>{w.s=W[k+i].s-LEAD;w.e=W[k+i].e;});k+=ws.length;o.t0=ws[0].s;o.t1=ws[ws.length-1].e;return o;});
+ l.t0=l.S[0].t0;l.solI=l.sol??1;l.nameI=l.S.length-1;l.ts=l.S[Math.min(l.solI,l.S.length-1)].t0;l.tn=l.S[l.nameI].t0;}
+if(k!==W.length)throw new Error(`o roteiro tem ${k} palavras e palavras.json tem ${W.length}`);
+const FIM=L[L.length-1],TP=FIM.S[0].t0,TF1=FIM.S[1].t0,TF2=FIM.S[2].t0,TE=W[W.length-1].e,TC=TE+.25;
+window.DURACAO=+(TE+3.4).toFixed(2);
+window.MAXB=()=>Math.max(...[...document.querySelectorAll('.scr')].map(e=>1150+e.offsetHeight));window.TEMPOS={L:L.map(l=>({t0:l.t0,ts:l.ts,tn:l.tn,nome:l.nome})),TP,TF1,TF2,TC};
+
+// ---------- montar ----------
+const iso=$('iso'),plates=[];
+L.forEach((l,i)=>{if(l.fim)return;const p=document.createElement('div');p.className='plate';
+ const sv=document.createElementNS(NS,'svg');sv.setAttribute('viewBox','0 0 640 640');const g=document.createElementNS(NS,'g');g.id='art'+i;sv.appendChild(g);
+ const ring=document.createElementNS(NS,'circle');ring.setAttribute('cx',320);ring.setAttribute('cy',320);ring.setAttribute('fill','none');ring.setAttribute('stroke',MINT);ring.setAttribute('stroke-width',5);ring.style.opacity=0;sv.appendChild(ring);
+ l.ring=ring;l.g=g;
+ for(const e of l.art){const pa=document.createElementNS(NS,'path');pa.setAttribute('d',e.d);const col=e.c==='m'?MINT:e.c==='r'?RED:'#fff';
+  pa.setAttribute('stroke',col);pa.setAttribute('stroke-width',e.c==='w'?6:7.5);pa.style.fill=col;pa.style.fillOpacity=0;g.appendChild(pa);e.el=pa;e.len=pa.getTotalLength();e.col=col;
+  pa.style.strokeDasharray=e.len+1;
+  const sg=l.S[e.s],d=sg.t1-sg.t0;if(e.f){e.a=sg.t0+e.f[0]*d;e.b=sg.t0+e.f[1]*d;}if(e.fa!=null)e.tfa=sg.t0+e.fa*d;}
+ // elementos sem f: partilham a frase, pelo comprimento
+ const by={};l.art.forEach(e=>{if(!e.f)(by[e.s]??=[]).push(e);});
+ for(const s in by){const sg=l.S[s],tot=by[s].reduce((a,e)=>a+e.len,0),d=sg.t1-sg.t0-.1;let a=sg.t0+.08;for(const e of by[s]){e.a=a;a+=d*e.len/tot;e.b=a;}}
+ p.appendChild(sv);iso.appendChild(p);plates.push(p);l.plate=p;l.sv=sv;});
+// ponto de luz
+const dot=document.createElementNS(NS,'g');dot.innerHTML=`<circle r="46" fill="${MINT}" opacity=".16"/><circle r="24" fill="${MINT}" opacity=".3"/><circle r="9" fill="#fff"/>`;
+// progresso
+const pg=$('prog');for(let i=0;i<NP;i++){const d=document.createElement('i');d.innerHTML='<b></b>';pg.appendChild(d);}
+// texto
+const txt=$('txt');
+L.forEach(l=>{l.screens=l.scr.map(ix=>{const sc=document.createElement('div');sc.className='scr';
+  ix.forEach((si,j)=>{const ln=document.createElement('div');ln.className=j?'lb':'la';
+   l.S[si].ws.forEach(w=>{const sp=document.createElement('span');sp.className='wd';sp.textContent=w.w+' ';ln.appendChild(sp);w.sp=sp;});sc.appendChild(ln);l.S[si].ln=ln;});
+  txt.appendChild(sc);return{el:sc,ix,t0:l.S[ix[0]].t0};});
+ l.screens.forEach((s,j)=>{s.t1=j+1<l.screens.length?l.screens[j+1].t0:(l.nome?l.tn:L[1].t0-.25);});});
+// rótulos da torre
+const lb=$('lbls');L.forEach((l,i)=>{if(!l.nome)return;const d=document.createElement('div');d.className='tl';d.textContent=l.nome;lb.appendChild(d);l.lbl=d;});
+// partículas de fundo
+const rp=rng(7),pts=$('pts'),PT=[...Array(46)].map(()=>{const c=document.createElementNS(NS,'circle');c.setAttribute('fill','#bfe6ff');pts.appendChild(c);return{c,x:rp()*1080,y:rp()*1920,r:1.5+rp()*3,v:14+rp()*34,ph:rp()*6.28,f:.6+rp()*1.6};});
+// confetti
+const rc=rng(21),cf=$('cf'),CF=[...Array(70)].map(()=>{const c=document.createElementNS(NS,'rect');c.setAttribute('width',16);c.setAttribute('height',9);c.setAttribute('rx',3);c.setAttribute('fill',[MINT,'#fff','#5aa6ff','#34c27a'][Math.floor(rc()*4)]);cf.appendChild(c);
+ return{c,an:-Math.PI/2+(rc()-.5)*2.3,v:700+rc()*900,sp:(rc()-.5)*900,d:rc()*.25};});
+
+const guse=$('guse'),nm=$('nm'),nlab=$('nlab'),ntrm=$('ntrm'),nul=$('nul');
+
+window.renderAt=t=>{
+ // camada ativa e profundidade de cada placa
+ let LF=0;for(let i=1;i<L.length-1;i++)LF+=prog(t,L[i].t0-.12,L[i].t0+.38);
+ let cur=0;for(let i=0;i<L.length-1;i++)if(t>=L[i].t0-.12)cur=i;
+ const tw=prog(t,TP-.1,TP+.9),out=prog(t,TC,TC+.5);                  // torre final; saída para o CTA
+ const rz=-20+3.4*Math.sin(t*.9)+tw*(6+3.2*(t-TP)),rx=54+2.2*Math.sin(t*.7+1),sc=lerp(1,.5,tw);
+ iso.style.left=lerp(540,430,tw)+110*out+'px';iso.style.top=lerp(700,715,tw)+16*Math.sin(t*1.3)+510*out+'px';
+ iso.style.transform=`perspective(2600px) rotateX(${rx}deg) rotateZ(${rz}deg) scale(${sc})`;iso.style.opacity=1;
+ L.forEach((l,i)=>{if(l.fim)return;const d=LF-i,p=l.plate;
+  let z=d<0?-d*420:-d*96,op=d<0?clamp(1+d*1.7):d<.5?1:clamp(.5/d,0,1)*.62,ao=d<0?1:clamp(1-d*1.6);
+  if(tw>0){const zt=i?(i-5)*104:-900;z=lerp(z,zt,tw);op=lerp(op,i?1:0,tw);ao=lerp(ao,1,tw);}
+  const lit=t>=l.tn&&l.nome?1:0,pr=l.nome&&i>1&&t>=l.t0&&t<l.ts?prog(t,l.t0,l.t0+.3):0;
+  let pulse=0;if(l.nome&&t>=TF2){const tl=TF2+.25+(i-1)*.27;pulse=clamp(1-Math.abs(t-tl-.12)/.3);}
+  p.style.transform=`translateZ(${z.toFixed(1)}px) scale(${1+.05*pulse})`;p.style.opacity=op;
+  p.style.borderColor=pr?`rgba(255,${Math.round(lerp(255,123,pr))},${Math.round(lerp(255,123,pr))},${lerp(.4,.75,pr)})`:lit?`rgba(155,232,180,${.75+.25*pulse})`:'rgba(255,255,255,.4)';
+  p.style.background=`rgba(120,170,255,${.07+.1*pulse+(lit?.03:0)})`;
+  l.g.style.opacity=ao;
+  // desenho
+  const gl=l.nome?clamp(1-(t-l.tn)/.5):0;
+  for(const e of l.art){const kd=e.b>e.a?clamp((t-e.a)/(e.b-e.a)):(t>=e.a?1:0);e.el.style.strokeDashoffset=(e.len+1)*(1-kd);
+   let o=kd>0?1:0;if(e.tmp)o*=1-lin(t,l.ts-.05,l.ts+.22);if(e.dim)o*=lerp(1,.32,prog(t,l.ts+.3,l.ts+.8));
+   e.el.style.opacity=o;
+   let fo=0;if(e.fill&&l.nome&&t>=l.tn)fo=(e.c==='m'?.34:.14)+.35*gl;if(e.tfa!=null)fo=.85*prog(t,e.tfa,e.tfa+.22);
+   e.el.style.fillOpacity=fo;e.el.setAttribute('stroke-width',(e.c==='w'?6:7.5)+3*gl*(e.c==='r'?0:1));
+   if(e.arm){const kr=l.nome?back(lin(t,l.tn,l.tn+.5)):0;e.el.setAttribute('transform',`rotate(${-58*kr} 146 455)`);e.el.setAttribute('stroke',kr>.5?MINT:RED);}
+  }
+  // anel de luz no nome
+  if(l.nome){const kr=lin(t,l.tn,l.tn+.65);l.ring.setAttribute('r',40+330*ease(kr));l.ring.style.opacity=kr>0&&kr<1?(1-kr)*.9:0;}
+ });
+ // ponto de luz: na ponta da linha que se está a desenhar
+ const A=L[cur];if(!A.fim&&tw===0){if(dot.parentNode!==A.sv)A.sv.appendChild(dot);
+  let x=320,y=320,found=0,last=null;
+  for(const e of A.art){if(t>=e.a&&t<e.b&&e.b>e.a){const q=e.el.getPointAtLength(e.len*(t-e.a)/(e.b-e.a));x=q.x;y=q.y;found=1;}if(e.b<=t&&e.b>e.a&&(!last||e.b>=last.b))last=e;}
+  if(!found){if(last){const q=last.el.getPointAtLength(last.len);x=q.x;y=q.y;x+=10*Math.sin(t*5.1);y+=10*Math.cos(t*4.3);}else{x=320+120*Math.sin(t*2.3+cur);y=320+90*Math.sin(t*3.1+1.3*cur);}}
+  const ps=1+.22*Math.sin(t*9);dot.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${ps})`);dot.style.opacity=1;}
+ else dot.style.opacity=0;
+ guse.setAttribute('href','#art'+Math.min(cur,NP));$('ghost').style.opacity=.1*(1-tw);
+ // progresso
+ [...pg.children].forEach((d,i)=>{d.firstChild.style.width=100*prog(t,L[i+1].tn,L[i+1].tn+.35)+'%';});pg.style.opacity=1-tw;
+ // texto
+ for(const l of L)for(const s of l.screens){const vis=t>=s.t0-.02&&t<s.t1+.2;s.el.style.opacity=vis?(1-lin(t,s.t1-.02,s.t1+.18)):0;
+  if(!vis)continue;const sec=s.ix.length>1&&t>=l.S[s.ix[1]].t0;
+  s.ix.forEach((si,j)=>{const sg=l.S[si];sg.ln.style.opacity=j===0&&sec?.5:1;
+   for(const w of sg.ws){const kw=l===L[0]?1:lin(t,w.s,w.s+.1);w.sp.style.opacity=kw;w.sp.style.color=w.cls&&t>=w.s?(w.cls==='hm'?MINT:RED):'';}});
+  s.el.style.transform=`translateY(${(1-prog(t,s.t0-.02,s.t0+.3))*26}px)`;}
+ // nome da peça
+ let ni=-1;for(let i=1;i<=NP;i++)if(t>=L[i].tn&&t<L[i+1].t0+.05)ni=i;
+ if(ni>0){const l=L[ni],kin=lin(t,l.tn,l.tn+.4),ko=lin(t,L[ni+1].t0-.2,L[ni+1].t0);
+  if(nlab.textContent!==`PEÇA ${ni} DE ${NP}`){nlab.textContent=`PEÇA ${ni} DE ${NP}`;ntrm.textContent=l.nome;ntrm.style.fontSize=l.nome.length>12?'104px':'124px';}
+  nm.style.opacity=clamp(kin*3)*(1-ko);nm.style.transform=`translateY(${(1-back(kin))*46}px) scale(${.92+.08*back(kin)})`;nul.style.width=300*prog(t,l.tn+.15,l.tn+.7)+'px';}
+ else nm.style.opacity=0;
+ // fecho
+ const F=[[TP,TF1],[TF1,TF2],[TF2,TC+.1]];F.forEach(([a,b],i)=>{const e=$('f'+i),kin=lin(t,a,a+.35);e.style.opacity=t>=a?clamp(kin*3)*(1-lin(t,b-.15,b)):0;e.style.transform=`translateY(${(1-back(kin))*40}px) scale(${.9+.1*back(kin)})`;});
+ // rótulos: o nome de cada peça ao lado da sua placa
+ L.forEach((l,i)=>{if(!l.lbl)return;const tl=TF2+.25+(i-1)*.27,ka=lin(t,tl,tl+.25);
+  if(ka<=0){l.lbl.style.opacity=0;return;}const r=l.plate.getBoundingClientRect();
+  l.lbl.style.left=(r.right+14-(1-ease(ka))*30)+'px';l.lbl.style.top=((r.top+r.bottom)/2-20)+'px';l.lbl.style.opacity=ka*(1-out);});
+ // confetti no Parabéns
+ const tcf=t-TP;CF.forEach(p=>{const u=tcf-p.d;if(u<0||u>2.6){p.c.style.opacity=0;return;}const x=430+Math.cos(p.an)*p.v*u*.55,y=560+Math.sin(p.an)*p.v*u*.8+900*u*u;
+  p.c.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${(p.sp*u).toFixed(0)})`);p.c.style.opacity=clamp(2.6-u);});
+ $('stage').style.background=`radial-gradient(ellipse 85% 55% at ${(50+16*Math.sin(t*.9)).toFixed(2)}% ${(38+7*Math.sin(t*1.25+1)).toFixed(2)}%,rgb(${Math.round(20+7*Math.sin(t*1.7))},${Math.round(63+12*Math.sin(t*1.7))},${Math.round(134+16*Math.sin(t*1.7))}) 0%,#0a2a5c 46%,#061734 100%)`;
+ // partículas
+ for(const p of PT){const y=((p.y-p.v*t)%1920+1920)%1920;p.c.setAttribute('cx',p.x+18*Math.sin(t*.5+p.ph));p.c.setAttribute('cy',y);p.c.setAttribute('r',p.r);p.c.style.opacity=.1+.22*(.5+.5*Math.sin(t*p.f+p.ph));}
+ // CTA
+ const cta=$('cta'),kc=lin(t,TC+.15,TC+.6),tb=TC+1.55,kb=lin(t,tb,tb+.12),btn=$('btn'),cur2=$('cur');
+ cta.style.opacity=clamp(kc*3);cta.style.transform=`translateY(${(1-back(kc))*70}px) scale(${(.9+.1*back(kc))*(1+.012*Math.sin((t-TC)*2.2))})`;
+ const on=t>=tb+.06;btn.textContent=on?'A seguir ✓':'Seguir';btn.style.background=on?'#34c27a':'#1f6fd6';btn.style.transform=`scale(${1-.1*Math.sin(Math.PI*clamp((t-tb)/.3))+(on?.05*Math.sin((t-tb)*5)*clamp(1.5-(t-tb)):0)})`;
+ const km=prog(t,TC+.7,tb);cur2.style.opacity=clamp((t-TC-.6)*4)*(1-lin(t,tb+.5,tb+.8));cur2.style.left=lerp(880,560,km)+'px';cur2.style.top=lerp(1150,838,km)+'px';cur2.style.transform=`scale(${1-.25*kb*(1-lin(t,tb+.12,tb+.3))})`;
+ const at=$('at');at.style.opacity=.55*(1-out);
+ // flash curto no Parabéns
+ $('flash').style.opacity=.55*clamp(1-Math.abs(t-TP-.03)/.14);
+};
+}catch(e){window.ERRO=String(e&&e.stack||e);}
+</script></body></html>
